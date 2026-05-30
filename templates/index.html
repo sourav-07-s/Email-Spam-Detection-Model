@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>SpamShield — Email Analysis</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,300&family=DM+Sans:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css"/>
+<!-- <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"> -->
+<link rel="stylesheet" href="/static/style.css">
+
+</head>
+<body>
+
+<nav>
+  <div class="brand">
+    <div class="brand-mark"><i class="ti ti-shield-check" aria-hidden="true"></i></div>
+    <span class="brand-name">Spam<span>Shield</span></span>
+  </div>
+  <div class="nav-right">
+    <div class="nav-badge">Local &middot; no data leaves your browser</div>
+    <div class="toggle-wrap">
+      <span class="toggle-label" id="toggle-label">☀</span>
+      <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme" title="Toggle dark/light mode"></button>
+      <span class="toggle-label">☾</span>
+    </div>
+  </div>
+</nav>
+
+<div class="workspace">
+
+  <!-- LEFT PANEL -->
+  <div class="panel-left">
+    <div class="step-label">
+      <div class="step-num">1</div>
+      <span class="step-text">Input</span>
+    </div>
+    <div class="section-heading">
+      <h2 class="section-title">Paste the <em>email</em></h2>
+      <button class="btn-ghost" id="load-sample">Load sample</button>
+    </div>
+
+    <div class="field">
+      <div class="field-label"><i class="ti ti-at" aria-hidden="true"></i> Sender</div>
+      <input type="text" id="sender" placeholder="sender@domain.com"/>
+    </div>
+
+    <div class="field">
+      <div class="field-label"><i class="ti ti-align-left" aria-hidden="true"></i> Body</div>
+      <textarea id="body" placeholder="Paste the full email body here…"></textarea>
+    </div>
+
+    <div class="detector-wrap">
+      <div class="detector-bar">
+        <div class="detector-fill" id="det-fill"></div>
+      </div>
+      <div class="detector-labels">
+        <div class="detector-status" id="det-status">
+          <span class="dot" id="det-dot" style="background:var(--hint)"></span>
+          <span id="det-text" style="color:var(--hint)">Start typing to detect…</span>
+        </div>
+        <span class="detector-pct" id="det-pct"></span>
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn-primary" id="scan-btn"><i class="ti ti-scan" aria-hidden="true"></i> Analyze email</button>
+      <button class="btn-secondary" id="clear-btn"><i class="ti ti-x" aria-hidden="true"></i> Clear</button>
+    </div>
+  </div>
+
+  <!-- RIGHT PANEL -->
+  <div class="panel-right">
+    <div class="step-label">
+      <div class="step-num">2</div>
+      <span class="step-text">Results</span>
+    </div>
+
+    <div class="empty-state" id="empty-state">
+      <div class="empty-icon"><i class="ti ti-radar" aria-hidden="true"></i></div>
+      <h3>No analysis yet</h3>
+      <p>Fill in the email on the left and click <strong>Analyze email</strong> for a full breakdown.</p>
+    </div>
+
+    <div id="results" style="display:none;">
+      <div class="verdict-card" id="verdict-card">
+        <div class="verdict-banner" id="verdict-banner">
+          <div class="verdict-icon"><i id="v-icon" class="ti ti-x" aria-hidden="true"></i></div>
+          <div>
+            <div class="verdict-label" id="v-label">Spam detected</div>
+            <div class="verdict-sub" id="v-sub">Multiple strong spam signals.</div>
+          </div>
+          <div class="confidence-badge">
+            <div class="conf-label-text">Confidence</div>
+            <div class="conf-num" id="v-conf">98</div>
+            <div class="conf-denom">/100</div>
+          </div>
+        </div>
+        <div class="score-section">
+          <div class="score-meta">
+            <span>Spam score</span><span id="score-text">0 / 100</span>
+          </div>
+          <div class="score-track"><div class="score-fill" id="score-fill"></div></div>
+        </div>
+        <div class="stats-row">
+          <div class="stat-cell"><div class="stat-label">Links</div><div class="stat-val" id="stat-links">0</div></div>
+          <div class="stat-cell"><div class="stat-label">Words</div><div class="stat-val" id="stat-words">0</div></div>
+          <div class="stat-cell"><div class="stat-label">Rules hit</div><div class="stat-val" id="stat-rules">0</div></div>
+        </div>
+      </div>
+      <div class="rules-card">
+        <div class="rules-header">
+          <div class="rules-title">Detection breakdown</div>
+          <div class="rules-count" id="rules-count">0 signals</div>
+        </div>
+        <div id="rule-list"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast">
+  <span class="toast-dot"></span>
+  <span id="toast-msg">Analysis complete</span>
+</div>
+
+<!-- <script src="{{ url_for('static', filename='script.js') }}"></script> -->
+<script src="/static/script.js"></script>
+</body>
+</html>
